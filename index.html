@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+    }
+    h1 {
+      color: black;
+    }
+    .choices {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .choice {
+      font-size: 18px;
+      padding: 10px 20px;
+      border: 2px solid yellow;
+      border-radius: 10px;
+      background-color: black;
+      color: yellow;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .choice:hover {
+      transform: scale(1.1);
+    }
+    .results {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .results div {
+      font-size: 20px;
+      margin: 10px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #0088cc;
+    }
+  </style>
+</head>
+<body>
+  <h1>猜拳遊戲</h1>
+  <div class="choices">
+    <button class="choice" data-choice="剪刀">✌️ 剪刀</button>
+    <button class="choice" data-choice="石頭">✊ 石頭</button>
+    <button class="choice" data-choice="布">✋ 布</button>
+  </div>
+  <div class="results">
+    <div>你出：<span id="playerChoice" class="highlight"></span></div>
+    <div>電腦出：<span id="computerChoice" class="highlight"></span></div>
+    <div>結果：<span id="result" class="highlight"></span></div>
+  </div>
+
+  <script>
+    const choices = ["剪刀", "石頭", "布"];
+    const buttons = document.querySelectorAll(".choice");
+    const playerChoiceSpan = document.querySelector("#playerChoice");
+    const computerChoiceSpan = document.querySelector("#computerChoice");
+    const resultSpan = document.querySelector("#result");
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const playerChoice = button.getAttribute("data-choice");
+        playerChoiceSpan.textContent = playerChoice;
+
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        const computerChoice = choices[randomIndex];
+        computerChoiceSpan.textContent = computerChoice;
+
+        let result;
+        if (playerChoice === computerChoice) {
+          result = "平手";
+        } else if (
+          (playerChoice === "剪刀" && computerChoice === "布") ||
+          (playerChoice === "石頭" && computerChoice === "剪刀") ||
+          (playerChoice === "布" && computerChoice === "石頭")
+        ) {
+          result = "You win! 🎉";
+        } else {
+          result = "GGGGGGG! 😢";
+        }
+        resultSpan.textContent = result;
+    });
+  });
+  </script>
+</body>
+</html>
